@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>JD–Resume Evaluator</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f8;
+      margin: 0;
+      padding: 25px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #222;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin: 15px 0 5px;
+    }
+
+    input[type="text"], input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      border: none;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #005dc1;
+    }
+
+    #result {
+      margin-top: 25px;
+      white-space: pre-wrap;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 6px;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>JD–Resume RAG Evaluator</h2>
+
+    <label>JD Name (unique identifier for job role)</label>
+    <input type="text" id="jdName" placeholder="e.g., python_backend_2025" />
+
+    <label>Upload Job Description PDF</label>
+    <input type="file" id="jdFile" accept="application/pdf" />
+
+    <label>Upload Resume PDF</label>
+    <input type="file" id="resumeFile" accept="application/pdf" />
+
+    <button onclick="submitForm()">Evaluate</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    async function submitForm() {
+      const jdName = document.getElementById("jdName").value;
+      const jdFile = document.getElementById("jdFile").files[0];
+      const resumeFile = document.getElementById("resumeFile").files[0];
+      const resultBox = document.getElementById("result");
+
+      if (!jdName || !jdFile || !resumeFile) {
+        alert("Please fill all fields and upload both PDFs.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("jd_name", jdName);
+      formData.append("jd_file", jdFile);
+      formData.append("resume_file", resumeFile);
+
+      resultBox.style.display = "block";
+      resultBox.innerText = "Processing... Please wait.";
+
+      try {
+        const response = await fetch("http://localhost:8090/evaluate", {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await response.json();
+
+        resultBox.innerText = JSON.stringify(data, null, 2);
+
+      } catch (error) {
+        resultBox.innerText = "Error: " + error;
+      }
+    }
+  </script>
+</body>
+</html>

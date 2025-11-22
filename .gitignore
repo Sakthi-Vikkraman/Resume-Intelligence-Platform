@@ -1,0 +1,70 @@
+# ======================================
+# PYTHON / FASTAPI BACKEND
+# ======================================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+.env
+.env.*
+.venv/
+*.db
+*.sqlite3
+*.log
+instance/
+
+
+# ======================================
+# NODE / REACT FRONTEND (Client)
+# ======================================
+Client/node_modules/
+Client/build/
+Client/dist/
+Client/.next/
+Client/.nuxt/
+Client/.cache/
+Client/npm-debug.log*
+Client/yarn-debug.log*
+Client/yarn-error.log*
+Client/.env
+Client/.env.*
+
+
+# ======================================
+# DOCKER
+# ======================================
+*.pid
+*.tar
+docker-compose.override.yml
+
+
+# ======================================
+# SYSTEM / OS FILES
+# ======================================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+*.swp
+*.swo
+
+
+# ======================================
+# EDITOR CONFIGS
+# ======================================
+.vscode/
+.idea/
+*.iml
+
+
+# ======================================
+# TEST / COVERAGE
+# ======================================
+.coverage
+coverage/
+htmlcov/
+pytest_cache/
